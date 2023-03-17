@@ -66,3 +66,36 @@ SELECT nome, SubStr(NOME,Length(nome)-1,2) FROM TALUNO;
 
 --
 SELECT nome, SubStr(NOME, 3, Length(nome)-3) FROM TALUNO;
+
+COMMIT;
+
+SELECT * FROM TALUNO
+WHERE LOWER(NOME) = 'marta';
+
+SELECT * FROM TALUNO
+WHERE Upper(NOME) = 'TONY';
+
+SELECT * FROM TALUNO
+UNOWHERE Upper(SubStr(CIDADE,1,3)) = 'SAO';
+
+
+UPDATE TALUNO SET
+SALARIO = 688.50
+WHERE COD_ALUNO = 1;
+
+
+
+
+SELECT
+  SALARIO,
+  REPLACE(SALARIO, ',' , ''),
+  RPad(SALARIO, 10, '0'),  --Zeros a direita ate 10 casas
+  LPad(SALARIO, 10, '0'),  --Zeros a esquerda ate 10 casas
+  LPad(REPLACE(SALARIO, ',',''),10,'0')
+FROM TALUNO;
+
+
+COMMIT;
+
+
+
