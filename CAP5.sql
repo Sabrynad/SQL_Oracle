@@ -1,134 +1,134 @@
-SELECT * FROM TALUNO;
+SELECT * FROM taluno;
 
-SELECT * FROM TCONTRATO;
+SELECT * FROM tcontrato;
 
 --Produto cartesiano -> ERRADO
-SELECT TALUNO.COD_ALUNO, TALUNO.NOME, TCONTRATO.TOTAL
-FROM TALUNO, TCONTRATO
+SELECT taluno.cod_aluno, taluno.nome, tcontrato.total
+FROM taluno, tcontrato
 
 
 --Correto
-SELECT TALUNO.COD_ALUNO, TALUNO.NOME, TCONTRATO.TOTAL
-FROM TALUNO, TCONTRATO
-WHERE TALUNO.COD_ALUNO = TCONTRATO.COD_ALUNO
+SELECT taluno.cod_aluno, taluno.nome, tcontrato.total
+FROM taluno, tcontrato
+WHERE taluno.cod_aluno = tcontrato.cod_aluno
 
 
 --Coluna ambigua -> ERRADO
-SELECT COD_ALUNO, TALUNO.NOME, TCONTRATO.TOTAL
-FROM TALUNO, TCONTRATO
-WHERE TALUNO.COD_ALUNO = TALUNO.COD_ALUNO
+SELECT cod_aluno, taluno.nome, tcontrato.total
+FROM taluno, tcontrato
+WHERE taluno.cod_aluno = taluno.cod_aluno
 
 --Correto, quando uma coluna existe com mesmo nome em mais de uma tabela,
 --colocar prefixo na coluna
-SELECT TALUNO.COD_ALUNO, TALUNO.NOME, TCONTRATO.TOTAL
-FROM TALUNO, TCONTRATO
-WHERE TALUNO.COD_ALUNO = TALUNO.COD_ALUNO
+SELECT taluno.cod_aluno, taluno.nome, tcontrato.total
+FROM taluno, tcontrato
+WHERE taluno.cod_aluno = taluno.cod_aluno
 
 
 --Uniao da tabela de aluno com contrato
-SELECT ALU.COD_ALUNO, ALU.NOME AS ALUNO,
-       CON.COD_CONTRATO, CON.DATA, CON.TOTAL
+SELECT alu.cod_aluno, alu.nome AS aluno,
+       con.cod_contrato, con.data, con.total
 
-FROM TALUNO ALU, TCONTRATO CON
+FROM taluno alu, tcontrato con
 
-WHERE CON.COD_ALUNO = ALU.COD_ALUNO
+WHERE con.cod_aluno = alu.cod_aluno
 
-AND Upper (ALU.NOME) LIKE '%'
+AND Upper (alu.nome) LIKE '%'
 
-ORDER BY ALU.NOME
+ORDER BY alu.nome
 
 
-SELECT * FROM TALUNO
-SELECT * FROM TCONTRATO
-SELECT * FROM TGESTAO
-SELECT * FROM TCURSO
+SELECT * FROM taluno
+SELECT * FROM tcontrato
+SELECT * FROM tgestao
+SELECT * FROM tcurso
 
-SELECT ALU.COD_ALUNO, ALU.NOME AS ALUNO,
-       CON.COD_CONTRATO, CON.DATA, CON.TOTAL,
-       GES.COD_CURSO, CUR.NOME AS CURSO,
-       GES.PAGAMENTO
+SELECT alu.cod_aluno, alu.nome AS aluno,
+       con.cod_contrato, con.data, con.total,
+       ges.cod_curso, cur.nome AS curso,
+       ges.pagamento
 
-FROM TALUNO ALU, TCONTRATO CON,
-     TGESTAO GES, TCURSO CUR
+FROM taluno alu, tcontrato con,
+     tgestao ges, tcurso cur,
 
-WHERE ALU.COD_ALUNO = CON.COD_ALUNO
-AND   CON.COD_CONTRATO = GES.COD_CONTRATO
-AND   GES.COD_CURSO = CUR.COD_CURSO
+WHERE alu.cod_aluno = con.cod_aluno
+AND   con.cod_contrato = ges.cod_contrato
+AND   ges.cod_curso = cur.cod_curso
 
-ORDER BY CON.TOTAL DESC;
+ORDER BY con.total DESC;
 
 
  --------------------------
-CREATE TABLE TDESCONTO
-( CLASSE VARCHAR(1) PRIMARY KEY,
-  INFERIOR NUMBER(4,2),
-  SUPERIOR NUMBER (4,2)
+CREATE TABLE tdesconto
+( classe VARCHAR(1) PRIMARY KEY,
+  inferior NUMBER(4,2),
+  superior NUMBER (4,2)
 );
 
-INSERT INTO TDESCONTO VALUES ('A',00,10);
-INSERT INTO TDESCONTO VALUES ('B',11,15);
-INSERT INTO TDESCONTO VALUES ('C',16,20);
-INSERT INTO TDESCONTO VALUES ('D',21,25);
-INSERT INTO TDESCONTO VALUES ('E',26,30);
+INSERT INTO tdesconto VALUES ('A',00,10);
+INSERT INTO tdesconto VALUES ('B',11,15);
+INSERT INTO tdesconto VALUES ('C',16,20);
+INSERT INTO tdesconto VALUES ('D',21,25);
+INSERT INTO tdesconto VALUES ('E',26,30);
 
-SELECT * FROM TDESCONTO;
+SELECT * FROM tdesconto;
 
 
 COMMIT;
 
 ------------------------
 
-SELECT * FROM TCONTRATO
+SELECT * FROM tcontrato
 
-UPDATE TCONTRATO SET
-DESCONTO = 27
-WHERE COD_CONTRATO = 2;
+UPDATE tcontrato SET
+desconto = 27
+WHERE cod_contrato = 2;
 
 
-UPDATE TCONTRATO SET
-DESCONTO = 30
-WHERE COD_CONTRATO = 4;
+UPDATE tcontrato SET
+desconto = 30
+WHERE cod_contrato = 4;
 
 -------------------------------------
-SELECT CON.COD_CONTRATO AS CONTRATO, CON.DESCONTO,
-       DES.CLASSE AS DESCONTO
+SELECT con.cod_contrato AS contrato, con.desconto,
+       des.classe AS desconto
 
-FROM TCONTRATO CON, TDESCONTO DES
-WHERE CON.DESCONTO BETWEEN DES.INFERIOR AND DES. SUPERIOR
+FROM tcontrato con, tdesconto des
+WHERE con.desconto BETWEEN des.inferior AND des.superior
 
-ORDER BY CON.COD_CONTRATO;
+ORDER BY con.cod_contrato;
 
 --Mostrar cursos mais vendidos
-SELECT CUR.COD_CURSO, CUR.NOME, GES.COD_GESTAO
-FROM TCURSO CUR, TGESTAO GES
-WHERE CUR.COD_CURSO = GES.COD_CURSO
+SELECT cur.cod_curso, cur.nome, GES.cod_gestao
+FROM tcurso cur, tgestao ges
+WHERE cur.cod_curso = ges.cod_curso
 
 
 -- Mostrar cursos nao vendidos
-SELECT CUR.COD_CURSO, CUR.NOME,GES.COD_GESTAO
-FROM TCURSO CUR, TGESTAO GES
-WHERE CUR.COD_CURSO = GES.COD_CURSO(+)
-AND GES.COD_GESTAO IS NULL;
+SELECT cur.cod_curso, cur.nome,ges.cod_gestao
+FROM tcurso cur, tgestao ges
+WHERE cur.cod_curso = ges.cod_curso(+)
+AND ges.cod_gestao IS NULL;
 
 
-SELECT * FROM TCURSO;
+SELECT * FROM tcurso;
 
 
-UPDATE TCURSO SET PRE_REQ = 7
-WHERE COD_CURSO = 6
+UPDATE tcurso SET pre_req = 7
+WHERE cod_curso = 6
 
-UPDATE TCURSO SET PRE_REQ = 3
-WHERE COD_CURSO = 5
+UPDATE tcurso SET pre_req = 3
+WHERE cod_curso = 5
 
-UPDATE TCURSO SET PRE_REQ = 2
-WHERE COD_CURSO = 1
+UPDATE tcurso SET pre_req = 2
+WHERE cod_curso = 1
 
 
 --Select de duas tabelas (a mesma tabela)
-SELECT CURSO.NOME AS CURSO,
-       PRE_REQ.NOME AS PRE_REQUISITO
+SELECT curso.nome AS curso,
+       pre_req.nome AS pre_requisito
 
-FROM TCURSO CURSO, TCURSO PRE_REQ
-WHERE CURSO.PRE_REQ = PRE_REQ.COD_CURSO(+);
+FROM tcurso curso, tcurso pre_req
+WHERE curso.pre_req = pre_req.cod_curso(+);
 
 COMMIT;
