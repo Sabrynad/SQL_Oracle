@@ -1,39 +1,32 @@
-CREATE TABLE TDESCONTO
-(CLASSE VARCHAR(2),
- INFERIOR INTEGER,
- SUPERIOR INTEGER);
 
-A 00 10
-B 11 20
-C 21 30
 
-SELECT * FROM TDESCONTO
+SELECT * FROM tdesconto
 
-INSERT INTO TDESCONTO (CLASSE, INFERIOR, SUPERIOR)
+INSERT INTO tdesconto (classe, inferior, superior)
 VALUES ('&cla', &inf, &sup);
 
-SELECT * FROM TDESCONTO
-WHERE CLASSE = '&cla';
+SELECT * FROM tdesconto
+WHERE classe = '&cla';
 
-UPDATE TDESCONTO SET
-INFERIOR = &inf,
-SUPERIOR = &sup
-WHERE CLASSE = '&cla';
+UPDATE tdesconto SET
+inferior = &inf,
+superior = &sup
+WHERE classe = '&cla';
 
-DELETE FROM TDESCONTO
-WHERE CLASSE = '&cla';
+DELETE FROM tdesconto
+WHERE classe = '&cla';
 
 -----------------------
-CREATE TABLE TDESCONTO2
-  AS SELECT * FROM TDESCONTO
+CREATE TABLE tdesconto2
+  AS SELECT * FROM tdesconto
 
-SELECT * FROM TDESCONTO2;
+SELECT * FROM tdesconto2;
 
 COMMIT;
 
 --Transacao (commit/rollback)
 
-DELETE FROM TDESCONTO2;
+DELETE FROM tdesconto2;
 
 ROLLBACK;
 
@@ -41,42 +34,42 @@ ROLLBACK;
 --Deleta todos os registros da tabela
 -- nao tem clausula Whwere
 
-TRUNCATE TABLE TDESCONTO2;
+TRUNCATE TABLE tdesconto2;
 
-SELECT * FROM TDESCONTO2;
+SELECT * FROM tdesconto2;
 
 
 COMMIT;
 
-SELECT * FROM TDESCONTO;
+SELECT * FROM tdesconto;
 
 --Savepoint
 SAVEPOINT upd_b;
 
-UPDATE TDESCONTO SET
-SUPERIOR = 88
-WHERE CLASSE = 'B';
+UPDATE tdesconto SET
+superior = 88
+WHERE classe = 'B';
 
 SAVEPOINT upd_a;
 
-UPDATE TDESCONTO SET
-SUPERIOR = 99
-WHERE CLASSE = 'A';
+UPDATE tdesconto SET
+superior = 99
+WHERE classe = 'A';
 
 
 --Ponto de restauracao
 SAVEPOINT ins_ok;
 
-INSERT INTO TDESCONTO(CLASSE, INFERIOR, SUPERIOR)
+INSERT INTO tdesconto(classe, inferior, superior)
 VALUES ('&cla', &inf, &sup);
 
-SELECT * FROM TDESCONTO;
+SELECT * FROM tdesconto;
 
 ROLLBACK TO SAVEPOINT ins_ok;
 ROLLBACK TO SAVEPOINT upd_a;
 ROLLBACK TO SAVEPOINT upd_b;
 
 --Excluir tabela
-DROP TABLE TDESCONTO2;
+DROP TABLE tdesconto2;
 
 COMMIT;
