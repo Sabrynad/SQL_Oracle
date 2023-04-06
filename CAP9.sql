@@ -1,12 +1,12 @@
-CREATE TABLE TESTE
-(CODIGO INTEGER NOT NULL PRIMARY KEY,
-  DATA DATE DEFAULT SYSDATE
+CREATE TABLE teste
+(codigo INTEGER NOT NULL PRIMARY KEY,
+  data DATE DEFAULT SYSDATE
 );
 
-INSERT INTO TESTE (CODIGO) VALUES (1);
+INSERT INTO teste (codigo) VALUES (1);
 
 
-SELECT * FROM TESTE;
+SELECT * FROM teste;
 
 
 --Tipos de Dados
@@ -17,73 +17,73 @@ NUMBER(5,2) -> 999.99
 
 
 --tabelas criadas pelo usuario -USER_TABLES(View)
-SELECT * FROM USER_TABLES;
+SELECT * FROM user_tables;
 
-SELECT * FROM ALL_TABLES;
+SELECT * FROM all_tables;
 
 
-CREATE TABLE TCONTRATO_VIP
+CREATE TABLE tcontrato_vip
 AS
- SELECT * FROM TCONTRATO WHERE TOTAL > 500;
+ SELECT * FROM tcontrato WHERE total > 500;
 
-SELECT * FROM TCONTRATO_VIP;
+SELECT * FROM tcontrato_vip;
 
 
 --Add coluna na tabela
-ALTER TABLE TCONTRATO_VIP ADD VALOR NUMBER(5,2);
+ALTER TABLE tcontrato_vip ADD valor NUMBER(5,2);
 
 --Alterar coluna
-ALTER TABLE TCONTRATO_VIP MODIFY VALOR NUMBER(8,2);
+ALTER TABLE tcontrato_vip MODIFY valor NUMBER(8,2);
 
 --Alterar coluna
-ALTER TABLE TCONTRATO_VIP MODIFY VALOR NUMBER(12,2); DEFAULT 0;
+ALTER TABLE tcontrato_vip MODIFY valor NUMBER(12,2); DEFAULT 0;
 
 --Renomear coluna
-ALTER TABLE TCONTRATO_VIP RENAME COLUMN VALOR TO VALOR2;
+ALTER TABLE tcontrato_vip RENAME COLUMN valor TO valor2;
 
 --Excluir cluna
-ALTER TABLE TCONTRATO_VIP DROP COLUMN VALOR2;
+ALTER TABLE tcontrato_vip DROP COLUMN valor2;
 
 --Excluir coluna
-DROP TABLE TCONTRATO_VIP
-DROP TABLE TITEM;
+DROP TABLE tcontrato_vip
+DROP TABLE titem;
 
 --Renomear tabela
-RENAME TCONTRATO TO TCONTRATO_TOP;
+RENAME tcontrato TO tcontrato_top;
 
-SELECT * FROM TCONTRATO_TOP;
+SELECT * FROM tcontrato_top;
 
-RENAME TCONTRATO_TOP TO TCONTRATO;
+RENAME tcontrato_top TO tcontrato;
 
-SELECT * FROM TCONTRATO;
+SELECT * FROM tcontrato;
 
 
 --Comentatio na tabela
-COMMENT ON TABLE TCONTRATO IS 'Informacao de Contratos';
+COMMENT ON TABLE tcontrato IS 'Informacao de Contratos';
 
 --Comentario na coluna da tabela
-COMMENT ON COLUMN TCONTRATO.COD_CONTRATO IS 'Codigo de Contrato';
+COMMENT ON COLUMN tcontrato.cod_contrato IS 'Codigo de Contrato';
 
-COMMENT ON COLUMN TCONTRATO.DATA IS 'Data de emissao do Contrato';
+COMMENT ON COLUMN tcontrato.data IS 'Data de emissao do Contrato';
 
-SELECT * FROM USER_COL_COMMENTS WHERE TABLE_NAME = 'TCONTRATO';
+SELECT * FROM user_col_comments WHERE table_name = 'TCONTRATO';
 
-SELECT * FROM USER_TAB_COMMENTS WHERE TABLE_NAME = 'TCONTRATO';
+SELECT * FROM user_table_comments WHERE table_nome = 'TCONTRATO';
 
 
 --Desabilita coluna
-ALTER TABLE TCONTRATO ADD TOTAL2 NUMERIC(8,2);
+ALTER TABLE tcontrato ADD total2 NUMERIC(8,2);
 
-ALTER TABLE TCONTRATO SET UNUSED (TOTAL2);
+ALTER TABLE tcontrato SET unused (total2);
 
-SELECT * FROM TCONTRATO;
+SELECT * FROM tcontrato;
 
 --Excluir colunas nao usadas
-ALTER TABLE TCONTRATO DROP UNUSED COLUMNS;
+ALTER TABLE tcontrato DROP unused COLUMNS;
 
 
 --TRUNCATE TABLE -> esclui todos os registros da tabela
 --Nao tem WHERE nem COMMIT/ROLLBACK
-TRUNCATE TABLE TESTE;
+TRUNCATE TABLE teste;
 
 COMMIT;
