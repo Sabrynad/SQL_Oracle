@@ -1,118 +1,118 @@
-SELECT Count(*)   AS QTDE_REGISTROS,
-       Avg(TOTAL) AS MEDIA,
-       Round (Avg(TOTAL),2) AS MEDIA,
-       Max(TOTAL) AS MAXIMO,
-       Min(TOTAL) AS MINIMO,
-       Sum(TOTAL) AS SOMA,
-       Max(DATA)  AS DATA_MAIOR,
-       Min(DATA)  AS DATA_MENOR
-FROM TCONTRATO
+SELECT Count(*)   AS qtde_registros,
+       Avg(total) AS media,
+       Round (Avg(total),2) AS media,
+       Max(total) AS maximo,
+       Min(total) AS minimo,
+       Sum(total) AS soma,
+       Max(data)  AS data_maior,
+       Min(data)  AS data_menor
+FROM tcontrato
 
 --Proximo codigo sequencial tabela
-SELECT Max(COD_CONTRATO) AS PROXIMO_CODIGO
-FROM TCONTRATO;
+SELECT Max(cod_contrato) AS proximo_codigo
+FROM tcontrato;
 
-SELECT * FROM TALUNO;
-SELECT * FROM TCONTRATO;
+SELECT * FROM taluno;
+SELECT * FROM tcontrato;
 
 --Total de contratos por aluno
-SELECT COD_ALUNO,
-       Count(*) AS QTDE_CONTRATO,
-       Sum(TOTAL) AS VALOR_TOTAL
-FROM TCONTRATO
-GROUP BY COD_ALUNO;
+SELECT cod_aluno,
+       Count(*) AS qtde_contrato,
+       Sum(total) AS valor_total
+FROM tcontrato
+GROUP BY cod_aluno;
 
 --Total de contrato por data
-SELECT To_Char(Trunc(DATA), 'DD/MM/YYY') AS DATA,
-       Sum(TOTAL) AS SOMA,
-       Avg(TOTAL) AS MEDIA,
-       Count(*) AS QTDE
-FROM TCONTRATO
-GROUP BY Trunc(DATA)
-ORDER BY DATA DESC;
+SELECT To_Char(Trunc(data), 'DD/MM/YYY') AS data,
+       Sum(total) AS soma,
+       Avg(total) AS media,
+       Count(*) AS qtde
+FROM tcontrato
+GROUP BY Trunc(data)
+ORDER BY data DESC;
 
 ------------------
-UPDATE TCONTRATO SET
-DESCONTO = NULL
-WHERE COD_CONTRATO = 6;
+UPDATE tcontrato SET
+desconto = NULL
+WHERE cod_contrato = 6;
 
-UPDATE TCONTRATO SET
-DESCONTO = NULL
-WHERE COD_CONTRATO = 3
+UPDATE tcontrato SET
+desconto = NULL
+WHERE cod_contrato = 3
 
-SELECT Count(*) AS QTDE_REGISTROS
-FROM TCONTRATO;
+SELECT Count(*) AS qtde_registros
+FROM tcontrato;
 
-SELECT * FROM TCONTRATO
+SELECT * FROM tcontrato
 
 --COUNT -> IGNORA NULOS
-SELECT Count(DESCONTO)
-FROM TCONTRATO;
+SELECT Count(desconto)
+FROM tcontrato;
 
 --qtde de registros com estado informado
-SELECT Count(ESTADO) FROM TALUNO;
+SELECT Count(estado) FROM taluno;
 
 --qtde de estados diferentes
-SELECT Count(DISTINCT(ESTADO)) FROM TALUNO;
+SELECT Count(DISTINCT(estado)) FROM taluno;
 
 --qtde de registros por estado
-SELECT ESTADO, Count(*)
-FROM TALUNO
-GROUP BY ESTADO;
+SELECT estado, Count(*)
+FROM taluno
+GROUP BY estado;
 
 
-SELECT Sum(DESCONTO),
-       Avg(DESCONTO),
-       Count(DESCONTO),
-       Round(Avg( Nvl(DESCONTO,0) ), 2)
-FROM TCONTRATO;
+SELECT Sum(desconto),
+       Avg(desconto),
+       Count(desconto),
+       Round(Avg( Nvl(desconto,0) ), 2)
+FROM tcontrato;
 
-SELECT * FROM TCONTRATO
+SELECT * FROM tcontrato
 
 --Total de contrato por estado e data
-SELECT ALU.ESTADO, Trunc(CON.DATA) AS DATA,
-       Sum(CON.TOTAL) TOTAL, Count(*) QTDE
+SELECT alu.estado, Trunc(con.data) AS data,
+       Sum(con.total) total, Count(*) qtde
 
-FROM TALUNO ALU, TCONTRATO CON
-WHERE ALU.COD_ALUNO = CON.COD_ALUNO
-GROUP BY ALU.ESTADO, Trunc(CON.DATA)
-ORDER BY ALU.ESTADO, DATA DESC;
+FROM taluno alu, tcontrato con
+WHERE alu.cod_aluno = con.cod_aluno
+GROUP BY alu.estado, Trunc(con.data)
+ORDER BY alu.estado, data DESC;
 
 
 --Total de contrato por estado
-SELECT ALU.ESTADO,
-       Sum(CON.TOTAL) TOTAL, Count(*) QTDE
+SELECT alu.estado,
+       Sum(con.total) total, Count(*) qtde
 
-FROM TALUNO ALU, TCONTRATO CON
-WHERE ALU.COD_ALUNO = CON.COD_ALUNO
-GROUP BY ALU.ESTADO
-ORDER BY ALU.ESTADO;
+FROM taluno alu, tcontrato con
+WHERE alu.cod_aluno = con.cod_aluno
+GROUP BY alu.estado
+ORDER BY alu.estado;
 
 --Having - filtrar aluna com funcao de grupo
-SELECT COD_ALUNO, Avg(TOTAL) MEDIA
-FROM TCONTRATO
-WHERE COD_ALUNO > 0
-HAVING Avg (TOTAL) > 500
-GROUP BY COD_ALUNO
-ORDER BY COD_ALUNO;
+SELECT cod_aluno, Avg(total) media
+FROM tcontrato
+WHERE cod_aluno > 0
+HAVING Avg (total) > 500
+GROUP BY cod_aluno
+ORDER BY cod_aluno;
 
-SELECT Trunc(DATA), Sum(TOTAL) TOTAL
-FROM TCONTRATO
-WHERE COD_CONTRATO > 0
-GROUP BY Trunc(DATA)
-HAVING Sum(TOTAL) > 500
-ORDER BY TOTAL DESC;
+SELECT Trunc(data), Sum(total) total
+FROM tcontrato
+WHERE cod_contrato > 0
+GROUP BY Trunc(data)
+HAVING Sum(total) > 500
+ORDER BY total DESC;
 
 
 --Media mais alta por aluno
-SELECT Max(Avg(TOTAL))
-FROM TCONTRATO
-GROUP BY COD_ALUNO;
+SELECT Max(Avg(total))
+FROM tcotrato
+GROUP BY cod_aluno;
 
 --Soma dos salarios por estado
-SELECT ESTADO, Sum(SALARIO) AS TOTAL
-FROM TALUNO
-GROUP BY ESTADO
+SELECT estado, Sum(salario) AS total
+FROM taluno
+GROUP BY estado
 ORDER BY 2 DESC;
 
 COMMIT;
